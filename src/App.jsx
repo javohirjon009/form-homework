@@ -1,27 +1,98 @@
-import React from "react";
-import Card from "./Card";
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
 const App = () => {
-  return (
-    <div className="h-full flex p-12 gap-6">
-      {/* <Protected> */}
-      <Card
-        image="https://picsum.photos/id/704/500/300"
-        title="product 1"
-        buttonType="primary"
-      />
-      <Card
-        image="https://picsum.photos/id/703/500/300"
-        title="product 2"
-        buttonType="danger"
-      />
-      <Card
-        image="https://picsum.photos/id/705/500/300"
-        title="product 3"
-        buttonType="success"
-      />
+  const [kontaktlar, setKontaktlar] = useState([]);
+  const [ism, setIsm] = useState("");
+  const [familiya, setFamiliya] = useState("");
+  const [kategoriya, setKategoriya] = useState("oilaviy");
+  const [telefon, setTelefon] = useState("");
+  const [sevimli, setSevimli] = useState(false);
+  const [kategoriyaFiltr, setKategoriyaFiltr] = useState("");
 
-      {/* </Protected> */}
+  useEffect(() => {
+    const saqlanganKontaktlar =
+      JSON.parse(localStorage.getItem("kontaktlar")) || [];
+    setKontaktlar(saqlanganKontaktlar);
+  }, []);
+
+  const saqlash = (yangiKontakt) => {
+    const yangilanganKontaktlar = [...kontaktlar, yangiKontakt];
+    localStorage.setItem("kontaktlar", JSON.stringify(yangilanganKontaktlar));
+    setKontaktlar(yangilanganKontaktlar);
+  };
+
+  const yuborish = (e) => {
+    e.preventDefault();
+    const yangiKontakt = { ism, familiya, kategoriya, telefon, sevimli };
+    saqlash(yangiKontakt);
+    setIsm("");
+    setFamiliya("");
+    setTelefon("");
+    setSevimli(false);
+  };
+
+  const kategoriyaOzgartirish = (e) => {
+    setKategoriyaFiltr(e.target.value);
+  };
+
+  return (
+    <div className="App">
+      <div className="form-container">
+        <h2>Kontakt Formasi</h2>
+        <form onSubmit={yuborish}>
+          <input
+            type="text"
+            value={ism}
+            onChange={(e) => setIsm(e.target.value)}
+            placeholder="Ism"
+            required
+          />
+          <input
+            type="text"
+            value={familiya}
+            onChange={(e) => setFamiliya(e.target.value)}
+            placeholder="Familiya"
+            required
+          />
+          <select
+            value={kategoriya}
+            onChange={(e) => setKategoriya(e.target.value)}
+          >
+            <option value="oilaviy">Oilaviy</option>
+            <option value="do'st">Do'st</option>
+            <option value="qarindosh">Qarindosh</option>
+            <option value="boshqa">Boshqa</option>
+          </select>
+          <input
+            type="text"
+            value={telefon}
+            onChange={(e) => setTelefon(e.target.value)}
+            placeholder="Telefon"
+            required
+          />
+          <label>
+            Sevimli
+            <input
+              type="checkbox"
+              checked={sevimli}
+              onChange={() => setSevimli(!sevimli)}
+            />
+          </label>
+          <button type="submit">Kontaktni qo'shish</button>
+        </form>
+      </div>
+
+      <div className="filters">
+        <input type="text" placeholder="To'liq Ismni Qidirish" />
+        <select value={kategoriyaFiltr} onChange={kategoriyaOzgartirish}>
+          <option value="">Hammasi</option>
+          <option value="oilaviy">Oilaviy</option>
+          <option value="do'st">Do'st</option>
+          <option value="qarindosh">Qarindosh</option>
+          <option value="boshqa">Boshqa</option>
+        </select>
+      </div>
     </div>
   );
 };
