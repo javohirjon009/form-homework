@@ -42,27 +42,27 @@ const App = () => {
         <h2>Kontakt Formasi</h2>
         <form onSubmit={yuborish}>
           <input
-            type="text"
+            type="name"
             value={ism}
             onChange={(e) => setIsm(e.target.value)}
-            placeholder="Ism"
+            placeholder="Name"
             required
           />
           <input
-            type="text"
+            type="name"
             value={familiya}
             onChange={(e) => setFamiliya(e.target.value)}
-            placeholder="Familiya"
+            placeholder="Lastname"
             required
           />
           <select
             value={kategoriya}
             onChange={(e) => setKategoriya(e.target.value)}
           >
-            <option value="oilaviy">Oilaviy</option>
-            <option value="do'st">Do'st</option>
-            <option value="qarindosh">Qarindosh</option>
-            <option value="boshqa">Boshqa</option>
+            <option value="family">Family</option>
+            <option value="friends">Friends</option>
+            <option value="relatives">Relatives</option>
+            <option value="other">Other</option>
           </select>
           <input
             type="text"
@@ -72,7 +72,7 @@ const App = () => {
             required
           />
           <label>
-            Sevimli
+            Favorite
             <input
               type="checkbox"
               checked={sevimli}
@@ -86,11 +86,11 @@ const App = () => {
       <div className="filters">
         <input type="text" placeholder="To'liq Ismni Qidirish" />
         <select value={kategoriyaFiltr} onChange={kategoriyaOzgartirish}>
-          <option value="">Hammasi</option>
-          <option value="oilaviy">Oilaviy</option>
-          <option value="do'st">Do'st</option>
-          <option value="qarindosh">Qarindosh</option>
-          <option value="boshqa">Boshqa</option>
+          <option value="">All</option>
+          <option value="family">Family</option>
+          <option value="friends">Friends</option>
+          <option value="relatives">Relatives</option>
+          <option value="other">Other</option>
         </select>
       </div>
     </div>
